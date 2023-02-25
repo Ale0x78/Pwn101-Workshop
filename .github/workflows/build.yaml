@@ -26,4 +26,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: release/*
+          asset_path: release/*
