@@ -14,19 +14,21 @@ jobs:
         run: make clean
       - name: make
         run: make all
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.2
+      - name: Create Release
         id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # Artifact name
-          name: ReleaseBinaries
-          path: release/*
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
       - name: Upload the binaries
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ReleaseBinaries.zip
-          asset_name: ReleaseBinaries.zip
+          asset_path: ./target/*
           asset_content_type: application/zip
