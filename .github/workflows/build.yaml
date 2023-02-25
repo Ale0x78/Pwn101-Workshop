@@ -1,36 +1,14 @@
-on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
-
+name: Main
+on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - name: clean
-        run: |
-          mkdir release
-          make clean
-      - name: make
-        run: make all
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        run: mkdir release; make all
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: "${{ github.ref }}"
-          release_name: Release "${{ github.ref }}"
-          draft: false
-          prerelease: false
-      - name: Upload the binaries
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release/*
-          asset_content_type: application/zip
+          files: release/*
