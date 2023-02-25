@@ -11,6 +11,7 @@ struct user_struct
 int main()
 {
     user user1;
+    user1.admin = 0;
     printf("Enter a string:\n");
 
     gets(user1.name); // This is the vulnerable function that allows for buffer overflow
