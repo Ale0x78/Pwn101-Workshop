@@ -11,7 +11,7 @@ void vulnrable_function(void)
     char buffer[100];
 
     printf("Enter shellcode:\n");
-    read(0, buffer, 0x100);
+    read(0, buffer, 100);
     printf("Your shellcode is at %p, you may now change 8 byte chunks in there\n", buffer);
 
     printf("What idx do you want to write to?\n");
