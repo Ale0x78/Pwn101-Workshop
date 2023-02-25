@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-static-libgcc -Wall -Wextra -O0 -std=c11 -z execstack
+CFLAGS=-lm -Wall -Wextra -O0 -std=c11 -z execstack -static-libgcc -static-libstdc++
 
 all: level1a level1b level2a level2b
 level1a: src/level1a.c
